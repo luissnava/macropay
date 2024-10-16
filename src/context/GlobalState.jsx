@@ -77,12 +77,12 @@ const GlobalState = ({ children }) => {
     const actualizarProducto = (id, nuevosDatos) => {
         const datos = getLocal()
         if (datos) {
-            const productosEliminados = datos.map(item =>
+            const productosActualizados = datos.map(item =>
                 item.id == id ? { ...item, ...nuevosDatos } : item
             );
-            const productosOrdenados = productosEliminados.sort((item1, item2) => item2.id - item1.id);
+            const productosOrdenados = productosActualizados.sort((item1, item2) => item2.id - item1.id);
             localStorage.setItem("productos", JSON.stringify(productosOrdenados))
-            setProductos(productosEliminados)
+            setProductos(productosActualizados)
             setOpen(!open)
         }
 
@@ -92,10 +92,10 @@ const GlobalState = ({ children }) => {
         const datos = getLocal()
 
         if (datos) {
-            const productosActualizados = datos.filter(item => item.id !== id)
-            const productosOrdenados = productosActualizados.sort((item1, item2) => item2.id - item1.id);
+            const productosEliminados = datos.filter(item => item.id !== id)
+            const productosOrdenados = productosEliminados.sort((item1, item2) => item2.id - item1.id);
             localStorage.setItem("productos", JSON.stringify(productosOrdenados))
-            setProductos(productosActualizados)
+            setProductos(productosEliminados)
             setOpen(!open)
         }
 
