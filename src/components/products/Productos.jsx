@@ -1,7 +1,6 @@
 "use client"
-import { productos } from '@/server/database';
 import { globalContext } from "@/context/globalContext";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import CardProduct from '../cards/Card';
 import Modal from '../modales/Modal';
 import HeaderPanel from '../header/Header';

@@ -17,6 +17,8 @@ import {
 const CardProduct = ({ item }) => {
 
     const { handleOpen } = useContext(globalContext)
+
+    
     return (
 
         <Card className="hover:scale-105 transition-all duration-500 flex flex-col">

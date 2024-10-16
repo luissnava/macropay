@@ -36,10 +36,13 @@ const GlobalState = ({ children }) => {
         setOpen(!open)
         setIdProduct(id)
     }
+    
 
     const consultarProducto = (id) => {
-
-        const productoSelected = productos.find(item => item.id == id)
+        const data = localStorage.getItem("productos")
+        const datos = JSON.parse(data)
+        
+        const productoSelected = datos?.find(item => item.id == id)
         if (productoSelected) {
             return productoSelected
         }
@@ -47,7 +50,7 @@ const GlobalState = ({ children }) => {
     }
 
     const agregarProducto = (nuevo) => {
-        const nuevoId = productos.length + 1
+        const nuevoId = productos?.length + 1
         const nuevoProducto = { ...nuevo, id: nuevoId };
         setProductos(prevProductos => [...prevProductos, nuevoProducto])
         setOpen(!open)

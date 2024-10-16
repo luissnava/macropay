@@ -5,6 +5,9 @@ import { globalContext } from '@/context/globalContext';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import Modal from '../modales/Modal';
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Typography } from "@material-tailwind/react"
 
 const Formulario = ({ valueId = null }) => {
     const { consultarProducto, actualizarProducto, agregarProducto } = useContext(globalContext)
@@ -19,22 +22,28 @@ const Formulario = ({ valueId = null }) => {
             setValue("description", producto.description);
             setValue("price", producto.price);
             setValue("category", producto.category);
-            setValue("image",producto.image)
+            setValue("image", producto.image)
         }
     }, [producto, setValue]);
 
     useEffect(() => {
+        console.log(valueId.params.id);
+        
         if (valueId) {
+            
             const record = consultarProducto(valueId.params.id)
-
+            console.log("record",record);
+            
             if (record) {
                 setProducto(record)
             }
         }
+       
     }, [])
+    
 
     const submit = handleSubmit((data) => {
-        
+
         if (producto) {
             actualizarProducto(valueId.params.id, data)
         } else {
@@ -45,6 +54,10 @@ const Formulario = ({ valueId = null }) => {
 
     return (
         <>
+            <div className="flex items-center gap-5 p-5 mt-5 ml-5">
+                <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+                <Typography as={"h5"} variant="h5" className="hover:underline cursor-pointer text-gray-800">Regresar</Typography>
+            </div>
             <div className='w-full flex justify-center items-cenetr'>
                 {
                     <Card className="mt-24 w-96">
