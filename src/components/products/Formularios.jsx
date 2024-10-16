@@ -8,6 +8,7 @@ import Modal from '../modales/Modal';
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Typography } from "@material-tailwind/react"
+import Link from 'next/link';
 
 const Formulario = ({ valueId = null }) => {
     const { consultarProducto, actualizarProducto, agregarProducto } = useContext(globalContext)
@@ -54,7 +55,7 @@ const Formulario = ({ valueId = null }) => {
         <>
             <div className="flex items-center gap-5 p-5 mt-5 ml-5">
                 <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
-                <Typography as={"h5"} variant="h5" className="hover:underline cursor-pointer text-gray-800">Regresar</Typography>
+                <Link href={"/"} className="hover:underline cursor-pointer text-gray-800 p-2">Regresar</Link>
             </div>
             <div className='w-full flex justify-center items-cenetr'>
                 {
