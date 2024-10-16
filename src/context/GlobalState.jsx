@@ -37,12 +37,11 @@ const GlobalState = ({ children }) => {
         setIdProduct(id)
     }
     
+    
 
     const consultarProducto = (id) => {
-        const data = localStorage.getItem("productos")
-        const datos = JSON.parse(data)
-        
-        const productoSelected = datos?.find(item => item.id == id)
+
+        const productoSelected = productos?.find(item => item.id == id)
         if (productoSelected) {
             return productoSelected
         }

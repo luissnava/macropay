@@ -27,12 +27,10 @@ const Formulario = ({ valueId = null }) => {
     }, [producto, setValue]);
 
     useEffect(() => {
-        console.log(valueId.params.id);
         
         if (valueId) {
             
             const record = consultarProducto(valueId.params.id)
-            console.log("record",record);
             
             if (record) {
                 setProducto(record)
