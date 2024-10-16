@@ -29,6 +29,14 @@ const GlobalState = ({ children }) => {
         }
     };
 
+    const getLocal = () => {
+        const datos = localStorage.getItem("productos");
+
+        const datosParse = JSON.parse(datos)
+
+        return datosParse
+    }
+
 
 
     const handleOpen = (id) => {
@@ -38,13 +46,11 @@ const GlobalState = ({ children }) => {
 
     const consultarProducto = (id) => {
 
-        const datos = localStorage.getItem("productos");
+        const datos = getLocal()
 
-        const datosParse = JSON.parse(datos)
+        if (datos) {
+            const productoSelected = datos.find(item => item.id == id)
 
-        if (datosParse) {
-            const productoSelected = datosParse.find(item => item.id == id)
-            
             if (productoSelected) {
                 return productoSelected
             }
@@ -53,26 +59,39 @@ const GlobalState = ({ children }) => {
     }
 
     const agregarProducto = (nuevo) => {
+        const datos = getLocal()
+        if (datos) {
+            const nuevoId = datos.length + 1
+            const nuevoProducto = { ...nuevo, id: nuevoId };
+            setProductos(prevProductos => [...prevProductos, nuevoProducto])
+            setOpen(!open)
+        }
 
-        const nuevoId = productos?.length + 1
-        const nuevoProducto = { ...nuevo, id: nuevoId };
-        setProductos(prevProductos => [...prevProductos, nuevoProducto])
-        setOpen(!open)
 
     }
 
     const actualizarProducto = (id, nuevosDatos) => {
-        const productosActualizados = productos.map(item =>
-            item.id == id ? { ...item, ...nuevosDatos } : item
-        );
-        setProductos(productosActualizados)
-        setOpen(!open)
+        const datos = getLocal()
+        if (datos) {
+            const productosActualizados = datos.map(item =>
+                item.id == id ? { ...item, ...nuevosDatos } : item
+            );
+            setProductos(productosActualizados)
+            setOpen(!open)
+        }
+
     }
 
     const eliminarProducto = (id) => {
-        const productosActualizados = productos.filter(item => item.id !== id)
-        setProductos(productosActualizados)
-        setOpen(!open)
+        const datos = getLocal()
+
+        if (datos) {
+            const productosActualizados = datos.filter(item => item.id !== id)
+            setProductos(productosActualizados)
+            setOpen(!open)
+        }
+
+
     }
 
     const valueProvider = useMemo(() => ({
