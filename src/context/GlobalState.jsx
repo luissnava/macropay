@@ -8,11 +8,28 @@ const GlobalState = ({ children }) => {
     const [idProduct, setIdProduct] = useState(0)
     const [productos, setProductos] = useState();
 
+    const getInitialProductos = () => {
+        const productosGuardados = localStorage.getItem("productos");
+        console.log(typeof productosGuardados);
+        console.log("datos", productosGuardados);
 
+        // Solo establecer productos desde localStorage si no está vacío
+        if (productosGuardados && productosGuardados !== "undefined") {
+            setProductos(JSON.parse(productosGuardados));
+        } else {
+            // Si no hay productos en localStorage, usar los datos iniciales
+            setProductos(items);
+        }
+    };
+
+    useEffect(() => {
+        getInitialProductos()
+
+    }, []);
     useEffect(() => {
         // Ordenar los productos de manera descendente por id
         const productosOrdenados = productos?.sort((item1, item2) => item2.id - item1.id);
-        localStorage.setItem("productos", JSON.stringify(productos))
+        localStorage.setItem("productos", JSON.stringify(productosOrdenados))
 
     }, [productos])
 
