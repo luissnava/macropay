@@ -305,3 +305,13 @@ const FormulariosComponent = () => {
     );
 }
 export default FormulariosComponent
+
+
+
+// const [productos, setProductos] = useState(() => {
+    //     const productosGuardados = localStorage.getItem("productos");
+    //     if (productosGuardados && productosGuardados !== "undefined") {
+    //         return JSON.parse(productosGuardados);
+    //     }
+    //     return items;
+    // });

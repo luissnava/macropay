@@ -1,3 +1,4 @@
+"use client";
 import React, { useMemo, useState, useEffect } from 'react'
 import { globalContext } from './globalContext'
 import { items } from '@/server/database'
@@ -5,23 +6,14 @@ const GlobalState = ({ children }) => {
 
     const [open, setOpen] = useState(false)
     const [idProduct, setIdProduct] = useState(0)
+    const [productos, setProductos] = useState();
 
-    const [productos, setProductos] = useState(items);
-
-    useEffect(() => {
-        if (typeof window !== "undefined") {  // Verificar si estamos en el cliente
-            const productosGuardados = localStorage.getItem("productos");
-            if (productosGuardados) {
-                setProductos(JSON.parse(productosGuardados));
-            }
-        }
-    }, []);
 
     useEffect(() => {
         // Ordenar los productos de manera descendente por id
-        const productosOrdenados = productos.sort((item1, item2) => item2.id - item1.id);
-        localStorage.setItem("productos", JSON.stringify(productosOrdenados))
-        
+        const productosOrdenados = productos?.sort((item1, item2) => item2.id - item1.id);
+        localStorage.setItem("productos", JSON.stringify(productos))
+
     }, [productos])
 
 
@@ -31,7 +23,6 @@ const GlobalState = ({ children }) => {
     }
 
     const consultarProducto = (id) => {
-
 
         const productoSelected = productos.find(item => item.id == id)
         if (productoSelected) {

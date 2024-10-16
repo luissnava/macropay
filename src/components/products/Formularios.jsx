@@ -130,11 +130,10 @@ const Formulario = ({ valueId = null }) => {
                                             message: "La categoría es requerida"
                                         }
                                     })}>
-                                        <option value="" defaultValue={producto ? producto.category : ""}></option>
-                                        <option value="men's clothing">men's clothing</option>
-                                        <option value="women's clothing">women's clothing</option>
-                                        <option value="electronics">electronics</option>
-                                        <option value="jewelery">jewelery</option>
+                                        <option value="" defaultValue={producto ? producto.category : "Selecciona una categoría"}></option>
+                                        <option value="ropaHombre">Ropa de hombre</option>
+                                        <option value="ropaMujer">Ropa de Mujer</option>
+                                        <option value="electronicos">Electronicos</option>
                                     </select>
                                     {errors.category && <span className="text-red-500 text-sm">{errors.category.message}</span>}
 
