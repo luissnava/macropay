@@ -11,12 +11,11 @@ const GlobalState = ({ children }) => {
     const getInitialProductos = () => {
         const productosGuardados = localStorage.getItem("productos");
        
-
         // Solo establecer productos desde localStorage si no está vacío
         if (productosGuardados && productosGuardados !== "undefined") {
             setProductos(JSON.parse(productosGuardados));
         } else {
-            // Si no hay productos en localStorage, usar los datos iniciales
+            
             setProductos(items);
         }
     };
