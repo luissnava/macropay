@@ -17,7 +17,9 @@ const GlobalState = ({ children }) => {
         // Solo establecer productos desde localStorage si no está vacío
         if (productosGuardados && productosGuardados !== "undefined") {
             console.log("Se establecen datos del local storage en el estado Productos ya que localstrorage ya tiene datos");
-            setProductos(JSON.parse(productosGuardados));
+            const datos = JSON.parse(productosGuardados)
+            const productosOrdenados = datos.sort((item1, item2) => item2.id - item1.id);
+            setProductos(productosOrdenados);
         } else {
 
             console.log("No se encuntran datos en el local y se establece items como valor de Productos");
@@ -63,6 +65,8 @@ const GlobalState = ({ children }) => {
         if (datos) {
             const nuevoId = datos.length + 1
             const nuevoProducto = { ...nuevo, id: nuevoId };
+            const datosActualizados = [...datos, nuevoProducto]
+            localStorage.setItem("productos", JSON.stringify(datosActualizados))
             setProductos(prevProductos => [...prevProductos, nuevoProducto])
             setOpen(!open)
         }
@@ -73,10 +77,12 @@ const GlobalState = ({ children }) => {
     const actualizarProducto = (id, nuevosDatos) => {
         const datos = getLocal()
         if (datos) {
-            const productosActualizados = datos.map(item =>
+            const productosEliminados = datos.map(item =>
                 item.id == id ? { ...item, ...nuevosDatos } : item
             );
-            setProductos(productosActualizados)
+            const productosOrdenados = productosEliminados.sort((item1, item2) => item2.id - item1.id);
+            localStorage.setItem("productos", JSON.stringify(productosOrdenados))
+            setProductos(productosEliminados)
             setOpen(!open)
         }
 
@@ -87,6 +93,8 @@ const GlobalState = ({ children }) => {
 
         if (datos) {
             const productosActualizados = datos.filter(item => item.id !== id)
+            const productosOrdenados = productosActualizados.sort((item1, item2) => item2.id - item1.id);
+            localStorage.setItem("productos", JSON.stringify(productosOrdenados))
             setProductos(productosActualizados)
             setOpen(!open)
         }

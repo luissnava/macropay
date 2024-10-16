@@ -35,7 +35,7 @@ const Formulario = ({ valueId = null }) => {
 
     const submit = handleSubmit((data) => {
 
-        if (producto) {
+        if (item) {
             actualizarProducto(valueId.params.id, data)
         } else {
             agregarProducto(data)
