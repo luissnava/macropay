@@ -10,8 +10,7 @@ const GlobalState = ({ children }) => {
 
     const getInitialProductos = () => {
         const productosGuardados = localStorage.getItem("productos");
-        console.log(typeof productosGuardados);
-        console.log("datos", productosGuardados);
+       
 
         // Solo establecer productos desde localStorage si no está vacío
         if (productosGuardados && productosGuardados !== "undefined") {
