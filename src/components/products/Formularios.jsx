@@ -22,6 +22,11 @@ const Formulario = ({ valueId = null }) => {
 
             if (record) {
                 setItem(record)
+                setValue("title", record.title);
+                setValue("description", record.description);
+                setValue("price", record.price);
+                setValue("category", record.category);
+                setValue("image", record.image)
             }
         }
 
