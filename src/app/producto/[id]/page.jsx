@@ -6,7 +6,6 @@ const pageProduct = (value) => {
 
     return (
         <>
-            
             <Formulario valueId={value} />
         </>
     )

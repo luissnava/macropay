@@ -8,47 +8,52 @@ const GlobalState = ({ children }) => {
     const [idProduct, setIdProduct] = useState(0)
     const [productos, setProductos] = useState();
 
+
     const getInitialProductos = () => {
+        console.log("Se comparara el local storgae cuando se inicia la pagina o se recarga la pagina");
+
         const productosGuardados = localStorage.getItem("productos");
-       
+
         // Solo establecer productos desde localStorage si no está vacío
         if (productosGuardados && productosGuardados !== "undefined") {
+            console.log("Se establecen datos del local storage en el estado Productos ya que localstrorage ya tiene datos");
             setProductos(JSON.parse(productosGuardados));
         } else {
-            
-            setProductos(items);
+
+            console.log("No se encuntran datos en el local y se establece items como valor de Productos");
+            // Ordenar los productos de manera descendente por id
+            const productosOrdenados = items.sort((item1, item2) => item2.id - item1.id);
+            setProductos(productosOrdenados)
+            localStorage.setItem("productos", JSON.stringify(productosOrdenados))
+
         }
     };
 
-    useEffect(() => {
-        getInitialProductos()
-
-    }, []);
-    useEffect(() => {
-        // Ordenar los productos de manera descendente por id
-        const productosOrdenados = productos?.sort((item1, item2) => item2.id - item1.id);
-        localStorage.setItem("productos", JSON.stringify(productosOrdenados))
-
-    }, [productos])
 
 
     const handleOpen = (id) => {
         setOpen(!open)
         setIdProduct(id)
     }
-    
-    
 
     const consultarProducto = (id) => {
 
-        const productoSelected = productos?.find(item => item.id == id)
-        if (productoSelected) {
-            return productoSelected
+        const datos = localStorage.getItem("productos");
+
+        const datosParse = JSON.parse(datos)
+
+        if (datosParse) {
+            const productoSelected = datosParse.find(item => item.id == id)
+            
+            if (productoSelected) {
+                return productoSelected
+            }
         }
 
     }
 
     const agregarProducto = (nuevo) => {
+
         const nuevoId = productos?.length + 1
         const nuevoProducto = { ...nuevo, id: nuevoId };
         setProductos(prevProductos => [...prevProductos, nuevoProducto])
@@ -74,6 +79,7 @@ const GlobalState = ({ children }) => {
         open,
         productos,
         idProduct,
+        getInitialProductos,
         handleOpen,
         consultarProducto,
         agregarProducto,

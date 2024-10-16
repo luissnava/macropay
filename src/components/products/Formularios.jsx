@@ -7,39 +7,26 @@ import Image from 'next/image';
 import Modal from '../modales/Modal';
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Typography } from "@material-tailwind/react"
 import Link from 'next/link';
 
 const Formulario = ({ valueId = null }) => {
-    const { consultarProducto, actualizarProducto, agregarProducto } = useContext(globalContext)
-
+    const { consultarProducto, actualizarProducto, agregarProducto, getInitialProductos } = useContext(globalContext)
     const { register, handleSubmit, formState: { errors }, watch, reset, setValue } = useForm()
-
-    const [producto, setProducto] = useState(null)
-
-    useEffect(() => {
-        if (producto) {
-            setValue("title", producto.title);
-            setValue("description", producto.description);
-            setValue("price", producto.price);
-            setValue("category", producto.category);
-            setValue("image", producto.image)
-        }
-    }, [producto, setValue]);
+    const [item, setItem] = useState(null)
 
     useEffect(() => {
-        
+
         if (valueId) {
-            
+
             const record = consultarProducto(valueId.params.id)
-            
+
             if (record) {
-                setProducto(record)
+                setItem(record)
             }
         }
-       
+
     }, [])
-    
+
 
     const submit = handleSubmit((data) => {
 
@@ -57,12 +44,13 @@ const Formulario = ({ valueId = null }) => {
                 <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
                 <Link href={"/"} className="hover:underline cursor-pointer text-gray-800 p-2">Regresar</Link>
             </div>
-            <div className='w-full flex justify-center items-cenetr'>
+
+            <div className='w-full flex justify-center items-center'>
                 {
                     <Card className="mt-24 w-96">
                         {
-                            producto && <CardHeader color="blue-gray" className="">
-                                <Image src={producto.image} width={500} height={500} alt={producto.category} className='w-full'></Image>
+                            item && <CardHeader color="blue-gray" className="">
+                                <Image src={item.image} width={500} height={500} alt={item.category} className='w-full'></Image>
                             </CardHeader>
                         }
 
@@ -73,7 +61,7 @@ const Formulario = ({ valueId = null }) => {
                                     <Input
                                         size="lg"
                                         label="Titulo"
-                                        defaultValue={producto ? producto.title : ""}
+                                        defaultValue={item ? item.title : ""}
                                         className=""
                                         {...register("title", {
                                             required: {
@@ -95,7 +83,7 @@ const Formulario = ({ valueId = null }) => {
                                     <Input
                                         size="lg"
                                         label="Descripción"
-                                        defaultValue={producto ? producto.description : ""}
+                                        defaultValue={item ? item.description : ""}
                                         className=""
                                         {...register("description", {
                                             required: {
@@ -113,7 +101,7 @@ const Formulario = ({ valueId = null }) => {
                                     <Input
                                         size="lg"
                                         label="Precio"
-                                        defaultValue={producto ? producto.price : ""}
+                                        defaultValue={item ? item.price : ""}
                                         className="w-full"
                                         {...register("price", {
                                             required: {
@@ -142,7 +130,7 @@ const Formulario = ({ valueId = null }) => {
                                             message: "La categoría es requerida"
                                         }
                                     })}>
-                                        <option value="" defaultValue={producto ? producto.category : "Selecciona una categoría"}></option>
+                                        <option value="" defaultValue={item ? item.category : "Selecciona una categoría"}></option>
                                         <option value="ropaHombre">Ropa de hombre</option>
                                         <option value="ropaMujer">Ropa de Mujer</option>
                                         <option value="electronicos">Electronicos</option>
@@ -152,7 +140,7 @@ const Formulario = ({ valueId = null }) => {
                                     <Input
                                         size="lg"
                                         label="Imagen"
-                                        defaultValue={producto ? producto.image : ""}
+                                        defaultValue={item ? item.image : ""}
                                         className=""
                                         {...register("image", {
                                             required: {
@@ -178,7 +166,7 @@ const Formulario = ({ valueId = null }) => {
                                 </div>
 
                                 <Button className="mt-6" type="submit" fullWidth>
-                                    {producto ? "Actualizar" : "Crear Producto"}
+                                    {item ? "Actualizar" : "Crear Producto"}
                                 </Button>
 
 
@@ -188,7 +176,6 @@ const Formulario = ({ valueId = null }) => {
                 }
 
             </div>
-
             <Modal />
         </>
 
