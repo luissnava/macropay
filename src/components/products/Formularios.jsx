@@ -122,7 +122,7 @@ const Formulario = ({ valueId = null }) => {
                                                 message: "El precio debe ser mayor a 0"
                                             },
                                             max: {
-                                                value: 999.99,
+                                                value: 9999.99,
                                                 message: "El precio no puede ser mayor a 999.99"
                                             }
                                         })}
