@@ -2,8 +2,8 @@
 import Formulario from "@/components/products/Formularios"
 
 export const metadata = {
-    title: "Crear un Producto",
-    description: "Crear un Producto"
+    title: "Editar un producto",
+    description: "Editar un producto"
 }
 const pageProduct = (value) => {
 
